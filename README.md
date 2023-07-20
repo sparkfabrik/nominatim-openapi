@@ -39,18 +39,17 @@ you can run `npx -y http-server ./docs` in a terminal from the project folder an
 
 ## Roadmap
 
-A this early stage, we are discussing the roadmap in a dedicated issue.
+A this early stage, we are discussing the roadmap in a [dedicated issue](https://github.com/sparkfabrik/nominatim-openapi/issues/1).
 When ready, the following table will be updated.
 
 | Milestone | Task | TBD | To do | Doing | Done | Refs |
 | --------- | ---- | --- | ----- | ----- | ---- | ---- |
-| OpenAPI Spec | `/search` endpoint | | | ■ | | |
-| | `/reverse` endpoint | | ■ | | | |
-| | `/lookup` endpoint | | ■ | | | |
-| | `/status` endpoint | ■ | | | | |
+| OpenAPI Spec | `/search` endpoint | | | ■ | | [#2](https://github.com/sparkfabrik/nominatim-openapi/issues/2) |
+| | `/reverse` endpoint | | ■ | | | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
+| | `/lookup` endpoint | | ■ | | | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
+| | `/status` endpoint | | ■ | | | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
 | | `/details` endpoint | ■ | | | | |
 | Node CLI | | ■ | | | | |
-| | | | | | | |
 
 ## Contributing
 
