@@ -119,8 +119,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "addressdetails",
@@ -128,8 +129,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "extratags",
@@ -137,8 +139,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "namedetails",
@@ -189,8 +192,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "bounded",
@@ -198,8 +202,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "polygon_geojson",
@@ -207,8 +212,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "polygon_kml",
@@ -216,8 +222,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "polygon_svg",
@@ -225,8 +232,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "polygon_text",
@@ -235,7 +243,7 @@
                     {
                         "schema": {
                             "type": "number",
-                            "default": 0.0
+                            "minimum": 0.0
                         },
                         "in": "query",
                         "name": "polygon_threshold",
@@ -251,8 +259,10 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": true
+                            "type": "integer",
+                            "default": 1,
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "dedupe",
@@ -260,8 +270,9 @@
                     },
                     {
                         "schema": {
-                            "type": "boolean",
-                            "default": false
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0
                         },
                         "in": "query",
                         "name": "debug",
@@ -295,61 +306,30 @@
                 "title": "Location",
                 "type": "object",
                 "properties": {
-                    "place_id": {
-                        "type": "integer"
-                    },
-                    "licence": {
-                        "type": "string"
-                    },
+                    "place_id": { "type": "integer" },
+                    "licence": { "type": "string" },
                     "osm_type": {
                         "type": "string",
-                        "enum": [
-                            "node",
-                            "way",
-                            "relation"
-                        ]
+                        "enum": [ "node", "way", "relation" ]
                     },
-                    "osm_id": {
-                        "type": "integer"
-                    },
+                    "osm_id": { "type": "integer" },
                     "boundingbox": {
                         "type": "array",
                         "minItems": 4,
                         "maxItems": 4,
-                        "items": {
-                            "type": "number"
-                        }
+                        "items": { "type": "string" }
                     },
-                    "lat": {
-                        "type": "number"
-                    },
-                    "lon": {
-                        "type": "number"
-                    },
-                    "display_name": {
-                        "type": "string"
-                    },
-                    "place_rank": {
-                        "type": "integer"
-                    },
-                    "category": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "importance": {
-                        "type": "number"
-                    },
-                    "icon": {
-                        "type": "url"
-                    },
-                    "address": {
-                        "$ref": "#/components/schemas/Address"
-                    },
-                    "extratags": {
-                        "$ref": "#/components/schemas/Extratags"
-                    }
+                    "lat": { "type": "string" },
+                    "lon": { "type": "string" },
+                    "display_name": { "type": "string" },
+                    "place_rank": { "type": "integer" },
+                    "category": { "type": "string" },
+                    "type": { "type": "string" },
+                    "importance": { "type": "number" },
+                    "icon": { "type": "url" },
+                    "address": { "$ref": "#/components/schemas/Address" },
+                    "extratags": { "$ref": "#/components/schemas/Extratags" },
+                    "namedetails": { "$ref": "#/components/schemas/Namedetails" }
                 },
                 "required": [
                     "display_name",
@@ -361,48 +341,42 @@
                 "title": "Address",
                 "type": "object",
                 "properties": {
-                    "city": {
-                        "type": "string"
-                    },
-                    "state_district": {
-                        "type": "string"
-                    },
-                    "state": {
-                        "type": "string"
-                    },
-                    "ISO3166-2-lvl4": {
-                        "type": "string"
-                    },
-                    "postcode": {
-                        "type": "string"
-                    },
-                    "country": {
-                        "type": "string"
-                    },
-                    "country_code": {
-                        "type": "string"
-                    }
+                    "road": { "type": "string" },
+                    "suburb": { "type": "string" },
+                    "city": { "type": "string" },
+                    "county": { "type": "string" },
+                    "ISO3166-2-lvl6": { "type": "string" },
+                    "state_district": { "type": "string" },
+                    "state": { "type": "string" },
+                    "ISO3166-2-lvl4": { "type": "string" },
+                    "postcode": { "type": "string" },
+                    "country": { "type": "string" },
+                    "country_code": { "type": "string" }
                 }
             },
             "Extratags": {
                 "title": "Extratags",
                 "type": "object",
                 "properties": {
-                    "capital": {
-                        "type": "string"
-                    },
-                    "website": {
-                        "type": "url"
-                    },
-                    "wikidata": {
-                        "type": "string"
-                    },
-                    "wikipedia": {
-                        "type": "string"
-                    },
-                    "population": {
-                        "type": "integer"
-                    }
+                    "capital": { "type": "string" },
+                    "website": { "type": "url" },
+                    "wikidata": { "type": "string" },
+                    "wikipedia": { "type": "string" },
+                    "population": { "type": "integer" }
+                }
+            },
+            "Namedetails": {
+                "title": "Namedetails",
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "official_name": { "type": "string" }
+                },
+                "patternProperties": {
+                    "^name:": { "type": "string" },
+                    "^old_name:": { "type": "string" },
+                    "^_place_name:": { "type": "string" },
+                    "^alt_name:": { "type": "string" }
                 }
             }
         }
