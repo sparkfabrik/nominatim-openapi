@@ -111,6 +111,15 @@ Nominatim (and OpenStreetMap) project have a long story and a non trivial develo
 - The `format` parameter ([docs](https://nominatim.org/release-docs/develop/api/Search/#output-format)) accepts 5 values (`xml`, `json`, `jsonv2`, `geojson`, `geocodejson`), but only `jsonv2` (the default one) is described by this specification in `components.schemas` (see [Nominatim/issues/1697](https://github.com/osm-search/Nominatim/issues/1697#issuecomment-726232719) and [OpenAPI-Specification/issues/2031](https://github.com/OAI/OpenAPI-Specification/issues/2031) for further informations).
 - In `jsonv2` responses some numeric values are represented by strings for historical reasons (see [this discussion](https://github.com/osm-search/Nominatim/discussions/3115)), so this specification.
 
+## Open Source Software
+
+This project would not exist without open source, it is open source, and the community behind it contributes to open source.
+
+Here is a list of external contributions (code and discussions) starting from work for this project:
+- fix typos in Nominatim error messages: [Nominatim/pull/3112](https://github.com/osm-search/Nominatim/pull/3112)
+- discussion about `jsonv2` format of Nominatim responses: [Nominatim/discussions/3115](https://github.com/osm-search/Nominatim/discussions/3115)
+- ...
+
 ## License
 
 MIT license on OpenAPI Specification.
