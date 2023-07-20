@@ -1,12 +1,10 @@
 # Contribution Guide
-
 Contributing to an open source project doesn't have to be through code alone. There are various ways in which you can contribute, and we're happy to accept all kinds of help. This guide will give you information on what kind of contributions you can make, and what steps you should follow.
 
 (This is a living document and will be updated over time to help make contributions easier. Please make sure to read this guide from time to time and check what has changed.)
 
 
 ## Types of Contributions (Beginners and Advanced)
-
 We're all just regular folks, those that write code, add comments, oversee the projects and of course those that use it. The rule of thumb is: if in doubt, **be kind**.
 
 ### Opening issues
@@ -63,40 +61,36 @@ These are more challenging than regular features, as we need to make sure they p
 This does not mean such changes will not be accepted, but be prepared to take more extensive feedback, and at times, even have a proposal declined.
 
 
+### Authorship
+Anyone who has contributed a pull request to the project is welcome to add themselves to the `AUTHORS.md` file. This file lives in the repository and is packaged with distributions.
+This is an optional process and is **opt-in**. Names and affiliations will be sourced from this file for publishing source code archives.
+
+
 ### Coding Guidelines
 
 #### Branching model
-
 - Feature branches should be prefixed with `feature/`.
-
 - Bugfix branches should be prefixed with `hotfix/`.
-
-- After the forward slash, include a short description of what you're fixing. For example: `hotfix/everything-that-was-broken`.
-
-- If there's an issue filed that you're addressing in your branch, include the issue number directly after the forward slash. For example: `hotfix/1234-fix-all-the-other-things`.
+- After the forward slash, include a short description of what you're fixing in kebab case (ie. `hotfix/everything-that-was-broken`).
+- If there's an issue filed that you're addressing in your branch, include the issue number directly after the forward slash and before an underscore (ie. `hotfix/1234_fix-all-the-other-things`).
 
 #### Committing
-
 - Break your commits into logical atomic units. Well-segmented commits make it _much_ easier for others to step through your changes.
-- Read [Conventional Commits Specification](https://www.conventionalcommits.org/en/v1.0.0/) before creating your first commit.
+- Read [Conventional Commits Specification](https://www.conventionalcommits.org/en/v1.0.0/) before commenting your commits.
 - Limit your subject (first) line to 69 characters (GitHub truncates more than 70).
 - Use the imperative, present tense: "change" not "changed" nor "changes"
 - Don't use [magic GitHub words](https://help.github.com/articles/closing-issues-using-keywords/) in your commits to close issues - do that in the pull request for your code instead.
 
 #### Making pull requests
-
-- **Do** summarize your changes in the PR body. If in doubt, write a bullet-point list titled `This PR does the following:`.
+- **Do** summarize your changes in the PR body. If in doubt, write a bullet-point list titled `This PR does the following:` (please follow the PR templates!).
 - **Do** include references to issues that your PR solves, and use [magic GitHub words](https://help.github.com/articles/closing-issues-using-keywords/) to close those issues automatically when your PR is merged. Add the references in the PR body and not the title.
 - **Do** include tests that cover new or changed functionality.
+- Feel free to add a line to `AUTHORS.md` with your name and handler.
 
 #### Merging pull requests
-- **Do** use GitHub's `Rebase and merge` strategy. Rebase main branch on local environment and force push if needed because of conflicts.
-
+Generally we prefer to use GitHub's `Rebase and merge` strategy, so please rebase main branch on local environment and force push if needed because of conflicts.
 
 #### Code Contribution Considerations
-
 - As mentioned, in most cases it's better to open a ticket discussing the suggested change before actually making the change.
-
 - Smaller changes are better. If you're working on a large change, it'd be much better to use smaller pull requests that are easier to manage and review than one large PR that contains a large amount of changes. If each PR cannot encapsulate a series of non-breaking changes, feel free to ask us to create a branch for you. You will then be able to make sequential PRs for review, and we will merge the branch when the work is complete.
-
 - In a case where we, unfortunately, have to reject your code change, we'll try to suggest a way to plug the functionality externally. That way, you (and others) can still make use of the change without it being part of the main codebase.
