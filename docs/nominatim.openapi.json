@@ -251,7 +251,8 @@
                     },
                     {
                         "schema": {
-                            "type": "email"
+                            "type": "string",
+                            "pattern": "email"
                         },
                         "in": "query",
                         "name": "email",
@@ -326,7 +327,7 @@
                     "category": { "type": "string" },
                     "type": { "type": "string" },
                     "importance": { "type": "number" },
-                    "icon": { "type": "url" },
+                    "icon": { "type": "string", "format": "url" },
                     "address": { "$ref": "#/components/schemas/Address" },
                     "extratags": { "$ref": "#/components/schemas/Extratags" },
                     "namedetails": { "$ref": "#/components/schemas/Namedetails" }
@@ -359,7 +360,7 @@
                 "type": "object",
                 "properties": {
                     "capital": { "type": "string" },
-                    "website": { "type": "url" },
+                    "website": { "type": "string", "format": "url" },
                     "wikidata": { "type": "string" },
                     "wikipedia": { "type": "string" },
                     "population": { "type": "integer" }
