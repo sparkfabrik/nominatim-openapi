@@ -252,7 +252,7 @@
                     {
                         "schema": {
                             "type": "string",
-                            "pattern": "email"
+                            "format": "email"
                         },
                         "in": "query",
                         "name": "email",
@@ -327,7 +327,7 @@
                     "category": { "type": "string" },
                     "type": { "type": "string" },
                     "importance": { "type": "number" },
-                    "icon": { "type": "string", "format": "url" },
+                    "icon": { "type": "string", "format": "uri" },
                     "address": { "$ref": "#/components/schemas/Address" },
                     "extratags": { "$ref": "#/components/schemas/Extratags" },
                     "namedetails": { "$ref": "#/components/schemas/Namedetails" }
@@ -360,7 +360,7 @@
                 "type": "object",
                 "properties": {
                     "capital": { "type": "string" },
-                    "website": { "type": "string", "format": "url" },
+                    "website": { "type": "string", "format": "uri" },
                     "wikidata": { "type": "string" },
                     "wikipedia": { "type": "string" },
                     "population": { "type": "integer" }
