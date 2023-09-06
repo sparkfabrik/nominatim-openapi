@@ -2,7 +2,7 @@
 name: Questions & Answers
 about: Ask for help or learn more about a topic
 title: ''
-labels: documentation
+labels: question
 assignees: ''
 
 ---
