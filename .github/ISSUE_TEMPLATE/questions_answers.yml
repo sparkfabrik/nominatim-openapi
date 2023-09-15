@@ -1,0 +1,31 @@
+name: Questions & Answers
+description: Ask for help or learn more about a topic
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: textarea
+    id: question-description
+    attributes:
+      label: Describe your question or point of view about a topic
+      description: Please by clear and concise.
+    validations:
+      required: true
+  - type: textarea
+    id: question-resources
+    attributes:
+      label: Share useful resources you know and trust
+      description: List resources (ie. other issues, projects, web pages, papers) you find useful.
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/sparkfabrik/nominatim-openapi/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to ask out this question!
