@@ -37,6 +37,8 @@ You can't simply open the `docs/index.html` file in your browser, because of def
 In a javascript-ready environment (ie. with [node](https://nodejs.org/en) and [npm](https://www.npmjs.com/) installed),
 you can run `npx -y http-server ./docs` in a terminal from the project folder and point your browser to `http://localhost:8080`.
 
+In a Docker-ready environment, you can run `make ui` to have the playground exposed on `http://localhost:8091`.
+
 ## Roadmap
 
 A this early stage, we are discussing the roadmap in a [dedicated issue](https://github.com/sparkfabrik/nominatim-openapi/issues/1).
@@ -61,6 +63,9 @@ then refer to [Contributing Guidelines](https://github.com/sparkfabrik/nominatim
 
 First of all, search for issues or open one to share your thoughts, needs or intents with the maintainers and the community.
 Then fork and clone this repo, make your changes, commit and push them on a new branch, finally open a PR against `main` branch of this repo.
+
+In a Docker-ready environment, you can run `make editor` to have the new Swagger Editor up and running on `http://localhost:8092`.
+Automatic file loading and saving is not available, so you must copy/paste the content of `nominatim.openapi.json` in the editor and then copy/paste it back to save the changes.
 
 <p align="center"><img src="./docs/logo-wide.png" width="50%" /></p>
 
