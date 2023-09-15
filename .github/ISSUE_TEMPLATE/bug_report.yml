@@ -3,6 +3,10 @@ description: File a bug report to help us improve
 title: "[Bug]: "
 labels: ["bug", "triage"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: describe-the-bug
     attributes:
@@ -66,7 +70,3 @@ body:
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!

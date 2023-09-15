@@ -10,5 +10,5 @@ Versions we are currently support with security updates.
 
 ## Reporting a Vulnerability
 
-Please report (suspected) security vulnerabilities opening an issue with the `security` label.
+Please report (suspected) security vulnerabilities with a private email to the [project maintainer](https://github.com/jenkin).
 If the issue is confirmed, we will release a patch as soon as possible depending on complexity.

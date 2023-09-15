@@ -3,6 +3,10 @@ description: Ask for help or learn more about a topic
 title: "[Question]: "
 labels: ["question"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to ask out this question!
   - type: textarea
     id: question-description
     attributes:
@@ -25,7 +29,3 @@ body:
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to ask out this question!

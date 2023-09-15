@@ -3,6 +3,10 @@ description: Suggest an idea for this project
 title: "[Feature]: "
 labels: ["enhancement", "triage"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to propose out this feature request!
   - type: textarea
     id: feature-description
     attributes:
@@ -39,7 +43,3 @@ body:
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this feature request!
