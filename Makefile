@@ -12,3 +12,7 @@ editor:
 	echo "Swagger Editor running at http://localhost:$(SWAGGER_ED_PORT)"
 	docker run --rm -p $(SWAGGER_ED_PORT):8080 -v $(PWD)/docs/nominatim.openapi.json:/tmp/nominatim.openapi.json -e SWAGGER_FILE=/tmp/nominatim.openapi.json swaggerapi/swagger-editor:$(SWAGGER_ED_VERSION)
 	echo "Shutdown Swagger Editor"
+
+hooks:
+	echo "Installing git hooks"
+	cp .githooks/* .git/hooks/

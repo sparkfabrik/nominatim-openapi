@@ -1,0 +1,26 @@
+#!/bin/bash
+
+VERSION=512
+SHA=sha"$VERSION"
+COMMAND="$SHA"sum
+
+INPUT=docs/nominatim.openapi.json
+OUTPUT="$INPUT".checksum
+
+if [ ! -f $INPUT ]
+then
+    echo "$INPUT file is missing, abort"
+    exit 1
+fi
+
+if ! command -v $COMMAND &> /dev/null
+then
+    echo "$COMMAND could not be found, please install it"
+    exit 1
+fi
+
+CHECKSUM=`$COMMAND $INPUT | awk '{print $1}'`
+
+echo -n "$SHA-$CHECKSUM" > $OUTPUT
+git add $OUTPUT
+
