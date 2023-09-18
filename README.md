@@ -39,6 +39,15 @@ you can run `npx -y http-server ./docs` in a terminal from the project folder an
 
 In a Docker-ready environment, you can run `make ui` to have the playground exposed on `http://localhost:8091`.
 
+### Security
+
+You can verify the integrity of [deployed spec](https://sparkfabrik.github.io/nominatim-openapi/nominatim.openapi.json)
+using the [sha512 checksum provided](https://github.com/sparkfabrik/nominatim-openapi/blob/main/docs/nominatim.openapi.json.checksum).
+
+You can run `make checksum` and `make verify` to compute and verify the checksum.
+
+Refs: #6.
+
 ## Roadmap
 
 A this early stage, we are discussing the roadmap in a [dedicated issue](https://github.com/sparkfabrik/nominatim-openapi/issues/1).
@@ -63,6 +72,10 @@ then refer to [Contributing Guidelines](https://github.com/sparkfabrik/nominatim
 
 First of all, search for issues or open one to share your thoughts, needs or intents with the maintainers and the community.
 Then fork and clone this repo, make your changes, commit and push them on a new branch, finally open a PR against `main` branch of this repo.
+
+Please activate the Git Hooks provided in `.githooks/` folder before the first change (hooks are bash scripts). You can simply run `make hooks` to activate them.
+- **pre-commit** - compute sha512 checksum of `nominatim.openapi.json` and write on `nominatim.openapi.json.checksum` file.
+- **pre-push** - verify the `nominatim.openapi.json` checksum against `nominatim.openapi.json.checksum` file.
 
 In a Docker-ready environment, you can run `make editor` to have the new Swagger Editor up and running on `http://localhost:8092`.
 Automatic file loading and saving is not available, so you must copy/paste the content of `nominatim.openapi.json` in the editor and then copy/paste it back to save the changes.
@@ -108,6 +121,18 @@ Website: https://nominatim.org
 Repository: https://github.com/osm-search
 
 > Nominatim uses OpenStreetMap data to find locations on Earth by name and address (geocoding). It can also do the reverse, find an address for any location on the planet.
+
+### What is Subresource Integrity (SRI)
+
+Website: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+
+> Subresource Integrity (SRI) is a security feature that enables browsers to verify that resources they fetch e delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched resource must match.
+
+### What are Secure Hash Algorithms (SHA)
+
+Website: https://en.wikipedia.org/wiki/SHA-2
+
+> The Secure Hash Algorithms are a family of cryptographic hash functions published by the National Institute of Standards and Technology (NIST).
 
 ## Drawbacks
 
