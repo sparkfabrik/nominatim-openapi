@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=512
+VERSION=${1:-512}
 SHA=sha"$VERSION"
 COMMAND="$SHA"sum
 
@@ -32,4 +32,3 @@ then
     echo "wrong checksum, please verify"
     exit 1
 fi
-

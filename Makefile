@@ -16,3 +16,10 @@ editor:
 hooks:
 	echo "Installing git hooks"
 	cp .githooks/* .git/hooks/
+
+checksum:
+	echo "Compute spec checksum"
+	.githooks/pre-commit
+
+verify:
+	.githooks/pre-push && echo "Checksum ok"

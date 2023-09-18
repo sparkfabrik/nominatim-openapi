@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=512
+VERSION=${1:-512}
 SHA=sha"$VERSION"
 COMMAND="$SHA"sum
 
@@ -21,6 +21,6 @@ fi
 
 CHECKSUM=`$COMMAND $INPUT | awk '{print $1}'`
 
+echo "$SHA-$CHECKSUM"
 echo -n "$SHA-$CHECKSUM" > $OUTPUT
 git add $OUTPUT
-
