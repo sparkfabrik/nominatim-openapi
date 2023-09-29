@@ -1,8 +1,9 @@
 #!/bin/bash
 
 VERSION=${1:-512}
-SHA=sha"$VERSION"
-COMMAND="$SHA"sum
+EXEC=shasum
+CMD="$EXEC -a $VERSION"
+SHA="sha$VERSION"
 
 INPUT=docs/nominatim.openapi.json
 OUTPUT="$INPUT".checksum
@@ -13,14 +14,15 @@ then
     exit 1
 fi
 
-if ! command -v $COMMAND &> /dev/null
+if ! command -v $EXEC &> /dev/null
 then
-    echo "$COMMAND could not be found, please install it"
+    echo "$EXEC could not be found, please install it"
     exit 1
 fi
 
-CHECKSUM=`$COMMAND $INPUT | awk '{print $1}'`
+CHECKSUM=`$CMD $INPUT | awk '{print $1}'`
 
-echo "$SHA-$CHECKSUM"
+echo "Checksum ($OUTPUT): $SHA-$CHECKSUM"
 echo -n "$SHA-$CHECKSUM" > $OUTPUT
 git add $OUTPUT
+exit 0
