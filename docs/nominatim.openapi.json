@@ -103,11 +103,11 @@
                                 "geojson",
                                 "geocodejson"
                             ],
-                            "default": "jsonv2"
+                            "default": "geocodejson"
                         },
                         "in": "query",
                         "name": "format",
-                        "description": "Format of response. See [Place Output Formats](https://nominatim.org/release-docs/develop/api/Output/) for details on each format."
+                        "description": "Format of response. See [Place Output Formats](https://nominatim.org/release-docs/develop/api/Output/) for details on each format. If not specified, it is equal to `jsonv2`."
                     },
                     {
                         "schema": {
@@ -121,7 +121,8 @@
                         "schema": {
                             "type": "integer",
                             "maximum": 1,
-                            "minimum": 0
+                            "minimum": 0,
+                            "default": 1
                         },
                         "in": "query",
                         "name": "addressdetails",
@@ -286,10 +287,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Location"
-                                    }
+                                    "$ref": "#/components/schemas/GeocodeJson"
                                 }
                             }
                         }
@@ -326,7 +324,7 @@
                                 "geojson",
                                 "geocodejson"
                             ],
-                            "default": "jsonv2"
+                            "default": "geocodejson"
                         },
                         "in": "query",
                         "name": "format",
@@ -344,7 +342,8 @@
                         "schema": {
                             "type": "integer",
                             "maximum": 1,
-                            "minimum": 0
+                            "minimum": 0,
+                            "default": 1
                         },
                         "in": "query",
                         "name": "addressdetails",
@@ -455,7 +454,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Location"
+                                        "$ref": "#/components/schemas/GeocodeJson"
                                     }
                                 }
                             }
@@ -470,82 +469,205 @@
     },
     "components": {
         "schemas": {
-            "Location": {
-                "title": "Location",
+            "BBox": {
+                "type": "array",
+                "minItems": 4,
+                "items": {
+                  "type": "number"
+                }
+            },
+            "GeocodeJson": {
+                "title": "GeocodeJSON schema",
                 "type": "object",
                 "properties": {
-                    "place_id": { "type": "integer" },
-                    "licence": { "type": "string" },
-                    "osm_type": {
+                    "type": {
                         "type": "string",
-                        "enum": [ "node", "way", "relation" ]
+                        "enum": [
+                            "FeatureCollection"
+                        ]
                     },
-                    "osm_id": { "type": "integer" },
-                    "boundingbox": {
+                    "geocoding": {
+                        "$ref": "#/components/schemas/GeocodeJsonMeta"
+                    },
+                    "features": {
                         "type": "array",
-                        "minItems": 4,
-                        "maxItems": 4,
-                        "items": { "type": "string" }
+                        "items": {
+                            "$ref": "#/components/schemas/GeocodeJsonFeature"
+                        }
                     },
-                    "lat": { "type": "string" },
-                    "lon": { "type": "string" },
-                    "display_name": { "type": "string" },
-                    "place_rank": { "type": "integer" },
-                    "category": { "type": "string" },
-                    "type": { "type": "string" },
-                    "importance": { "type": "number" },
-                    "icon": { "type": "string", "format": "uri" },
-                    "address": { "$ref": "#/components/schemas/Address" },
-                    "extratags": { "$ref": "#/components/schemas/Extratags" },
-                    "namedetails": { "$ref": "#/components/schemas/Namedetails" }
+                    "bbox": {
+                        "$ref": "#/components/schemas/BBox"
+                    }
                 },
                 "required": [
-                    "display_name",
-                    "lat",
-                    "lon"
+                    "type",
+                    "geocoding",
+                    "features"
                 ]
             },
-            "Address": {
-                "title": "Address",
+            "GeocodeJsonMeta": {
                 "type": "object",
                 "properties": {
-                    "road": { "type": "string" },
-                    "suburb": { "type": "string" },
-                    "city": { "type": "string" },
-                    "county": { "type": "string" },
-                    "ISO3166-2-lvl6": { "type": "string" },
-                    "state_district": { "type": "string" },
-                    "state": { "type": "string" },
-                    "ISO3166-2-lvl4": { "type": "string" },
-                    "postcode": { "type": "string" },
-                    "country": { "type": "string" },
-                    "country_code": { "type": "string" }
-                }
-            },
-            "Extratags": {
-                "title": "Extratags",
-                "type": "object",
-                "properties": {
-                    "capital": { "type": "string" },
-                    "website": { "type": "string", "format": "uri" },
-                    "wikidata": { "type": "string" },
-                    "wikipedia": { "type": "string" },
-                    "population": { "type": "integer" }
-                }
-            },
-            "Namedetails": {
-                "title": "Namedetails",
-                "type": "object",
-                "properties": {
-                    "name": { "type": "string" },
-                    "official_name": { "type": "string" }
+                    "version": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+                    },
+                    "licence": {
+                        "type": "string"
+                    },
+                    "attribution": {
+                        "type": "string"
+                    },
+                    "query": {
+                        "type": "string"
+                    }
                 },
-                "patternProperties": {
-                    "^name:": { "type": "string" },
-                    "^old_name:": { "type": "string" },
-                    "^_place_name:": { "type": "string" },
-                    "^alt_name:": { "type": "string" }
+                "required": [
+                    "version"
+                ]
+            },
+            "GeocodeJsonFeature": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "const": "string",
+                        "enum": "Feature"
+                    },
+                    "id": {
+                        "oneOf": [ { "type": "number" }, { "type": "string" } ]
+                    },
+                    "properties": {
+                        "type": "object",
+                        "properties": {
+                            "geocoding": {
+                                "$ref": "#/components/schemas/OSMFeatureMeta"
+                            }
+                        },
+                        "required": [
+                            "geocoding"
+                        ]
+                    },
+                    "geometry": {
+                        "$ref": "https://geojson.org/schema/Geometry.json"
+                    },
+                    "bbox": {
+                        "$ref": "#/components/schemas/BBox"
+                    }
+                },
+                "required": [
+                    "type",
+                    "properties",
+                    "geometry"
+                ]
+            },
+            "OSMFeatureMeta": {
+                "type": "object",
+                "allOf": [{ "$ref": "#/components/schemas/GeocodeJsonFeatureMeta" }],
+                "properties": {
+                    "osm_type": {
+                        "type": "string",
+                        "examples": [
+                            "node",
+                            "way",
+                            "relation"
+                        ]
+                    },
+                    "osm_id": {
+                        "type": "integer"
+                    },
+                    "osm_key": {
+                        "type": "string",
+                        "examples": [
+                            "boundary",
+                            "highway",
+                            "amenity"
+                        ]
+                    },
+                    "osm_value": {
+                        "type": "string",
+                        "examples": [
+                            "residential",
+                            "restaurant"
+                        ]
+                    }
                 }
+            },
+            "GeocodeJsonFeatureMeta": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "examples": [
+                            "house",
+                            "street",
+                            "district",
+                            "city",
+                            "county",
+                            "state",
+                            "country",
+                            "locality"
+                        ]
+                    },
+                    "accuracy": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "housenumber": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "locality": {
+                        "type": "string"
+                    },
+                    "postcode": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "county": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "admin": {
+                        "type": "object",
+                        "properties": {
+                            "level2": { "type": "string" },
+                            "level3": { "type": "string" },
+                            "level4": { "type": "string" },
+                            "level5": { "type": "string" },
+                            "level6": { "type": "string" },
+                            "level7": { "type": "string" },
+                            "level8": { "type": "string" },
+                            "level9": { "type": "string" },
+                            "level10": { "type": "string" },
+                            "level11": { "type": "string" }
+                        }
+                    },
+                    "geohash": {
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9]+(:.+)?$"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
             }
         }
     }
