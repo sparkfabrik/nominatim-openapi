@@ -303,9 +303,19 @@
         "/lookup": {
             "get": {
                 "summary": "Query the address and other details of one or multiple OSM objects like node, way or relation.",
-                "operationId": "123",
+                "operationId": "lookup",
                 "description": "Returns the details of an OSM object.",
                 "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^([RWN][0-9]+,?)+$"
+                        },
+                        "in": "query",
+                        "required": true,
+                        "name": "osm_ids",
+                        "description": "Comma-separated list of OSM ids each prefixed with its type, one of node(N), way(W) or relation(R). Up to 50 ids can be queried at the same time."
+                    },
                     {
                         "schema": {
                             "type": "string",
@@ -367,14 +377,6 @@
                         "in": "query",
                         "name": "accept-language",
                         "description": "Preferred language order for showing search results, overrides the value specified in the [Accept-Language HTTP header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language). Either use a standard RFC2616 accept-language string or a simple comma-separated list of language codes."
-                    },
-                    {
-                        "schema": {
-                            "type": "string"
-                        },
-                        "in": "query",
-                        "name": "countrycodes",
-                        "description": "Limit search results to one or more countries. `<countrycode>` must be the [ISO 3166-1alpha2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code. Each place in Nominatim is assigned to one country code based on OSM country boundaries. In rare cases a place may not be in any country at all, for example, in international waters."
                     },
                     {
                         "schema": {
