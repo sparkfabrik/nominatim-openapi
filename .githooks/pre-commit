@@ -1,27 +1,67 @@
 #!/bin/bash
 
-VERSION=512
-CMD=shasum
-SHA="sha$VERSION"
+OAS_FILE=docs/nominatim.openapi.json
+OAS_MIN_FILE=${OAS_FILE/.json/.min.json}
+SCHEMA_FILE=docs/geocodejson.schema.json
+SCHEMA_MIN_FILE=${SCHEMA_FILE/.json/.min.json}
 
-INPUT=docs/nominatim.openapi.json
-OUTPUT="$INPUT".checksum
+SHA_CMD=shasum
+SHA_VERSION=512
+SHA_PREFIX="sha$SHA_VERSION"
 
-if [ ! -f $INPUT ]
+NPX_CMD=npx
+VALIDATE_CMD="$NPX_CMD -y @apidevtools/swagger-cli validate"
+BUNDLE_OAS_CMD="$NPX_CMD -y @apidevtools/swagger-cli bundle"
+BUNDLE_SCHEMA_CMD="$NPX_CMD -y json-dereference-cli"
+MINIFY_CMD="$NPX_CMD -y pretty-mini-json"
+
+# OpenAPI spec and JSON schema files must exist
+if [ ! -f $OAS_FILE ] || [ ! -f $SCHEMA_FILE ]
 then
-    echo "$INPUT file is missing, abort"
+    echo "$OAS_FILE or $OAS_FILE files are missing, abort"
     exit 1
 fi
 
-if ! command -v $CMD &> /dev/null
+# npx must be installed
+if ! command -v $NPX_CMD &> /dev/null
 then
-    echo "$CMD could not be found, please install it"
+    echo "$NPX_CMD could not be found, please install it"
     exit 1
 fi
 
-CHECKSUM=`$CMD -a $VERSION $INPUT | awk '{print $1}'`
+# OpenAPI spec must be valid
+if ! $VALIDATE_CMD $OAS_FILE &> /dev/null
+then
+    echo "$OAS_FILE file is not a valid OpenAPI spec, please check"
+    exit 1
+fi
 
-echo "Checksum ($OUTPUT): $SHA-$CHECKSUM"
-echo -n "$SHA-$CHECKSUM" > $OUTPUT
-git add $OUTPUT
+# Create bundles
+$BUNDLE_OAS_CMD $OAS_FILE 2> /dev/null | $MINIFY_CMD -o $OAS_MIN_FILE 2> /dev/null
+$BUNDLE_SCHEMA_CMD -s $SCHEMA_FILE -o $SCHEMA_MIN_FILE 2> /dev/null
+
+# shasum must be installed
+if ! command -v $SHA_CMD &> /dev/null
+then
+    echo "$SHA_CMD could not be found, please install it"
+    exit 1
+fi
+
+# Compute checksums
+SHA_OAS_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OAS_FILE | cut -d" " -f 1`
+SHA_SCHEMA_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $SCHEMA_FILE | cut -d" " -f 1`
+SHA_OAS_MIN_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OAS_MIN_FILE | cut -d" " -f 1`
+SHA_SCHEMA_MIN_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $SCHEMA_MIN_FILE | cut -d" " -f 1`
+
+echo "Checksum ($OAS_FILE.checksum): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
+echo -n "$SHA_PREFIX-$SHA_OAS_CHECKSUM" > $OAS_FILE.checksum
+echo "Checksum ($SCHEMA_FILE.checksum): $SHA_PREFIX-$SHA_SCHEMA_CHECKSUM"
+echo -n "$SHA_PREFIX-$SHA_SCHEMA_CHECKSUM" > $SCHEMA_FILE.checksum
+echo "Checksum ($OAS_MIN_FILE.checksum): $SHA_PREFIX-$SHA_OAS_MIN_CHECKSUM"
+echo -n "$SHA_PREFIX-$SHA_OAS_MIN_CHECKSUM" > $OAS_MIN_FILE.checksum
+echo "Checksum ($SCHEMA_MIN_FILE.checksum): $SHA_PREFIX-$SHA_SCHEMA_MIN_CHECKSUM"
+echo -n "$SHA_PREFIX-$SHA_SCHEMA_MIN_CHECKSUM" > $SCHEMA_MIN_FILE.checksum
+
+# Stage new checksums
+git add $OAS_FILE.checksum $SCHEMA_FILE.checksum $OAS_MIN_FILE.checksum $SCHEMA_MIN_FILE.checksum
 exit 0
