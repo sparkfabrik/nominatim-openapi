@@ -23,3 +23,12 @@ checksum:
 
 verify:
 	.githooks/pre-push && echo "Checksum ok"
+
+validate:
+	echo "Validating Nominatim OpenAPI spec"
+	npx -y @apidevtools/swagger-cli validate docs/nominatim.openapi.json
+
+bundle:
+	echo "Building the Nominatim OpenAPI spec bundle (no external references)"
+	npx -y @apidevtools/swagger-cli bundle docs/nominatim.openapi.json | npx -y pretty-mini-json -o docs/nominatim.openapi.min.json
+	npx -y json-dereference-cli -s docs/geocodejson.schema.json -o docs/geocodejson.schema.min.json
