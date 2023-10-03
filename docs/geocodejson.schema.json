@@ -1,0 +1,200 @@
+{
+    "title": "GeocodeJSON schema",
+    "allOf": [
+        {
+            "$ref": "https://geojson.org/schema/GeoJSON.json"
+        }
+    ],
+    "properties": {
+        "type": {
+            "const": "FeatureCollection"
+        },
+        "geocoding": {
+            "$ref": "#/$defs/GeocodeJsonMeta"
+        },
+        "features": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/GeocodeJsonFeature"
+            }
+        }
+    },
+    "required": [
+        "geocoding"
+    ],
+    "$defs": {
+        "GeocodeJsonMeta": {
+            "type": "object",
+            "properties": {
+                "version": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+                },
+                "licence": {
+                    "type": "string"
+                },
+                "attribution": {
+                    "type": "string"
+                },
+                "query": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "version"
+            ]
+        },
+        "GeocodeJsonFeature": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "Feature"
+                },
+                "properties": {
+                    "type": "object",
+                    "properties": {
+                        "geocoding": {
+                            "$ref": "#/$defs/OSMFeatureMeta"
+                        }
+                    },
+                    "required": [
+                        "geocoding"
+                    ]
+                }
+            }
+        },
+        "OSMFeatureMeta": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/$defs/GeocodeJsonFeatureMeta"
+                }
+            ],
+            "properties": {
+                "osm_type": {
+                    "type": "string",
+                    "examples": [
+                        "node",
+                        "way",
+                        "relation"
+                    ]
+                },
+                "osm_id": {
+                    "type": "integer"
+                },
+                "osm_key": {
+                    "type": "string",
+                    "examples": [
+                        "boundary",
+                        "highway",
+                        "amenity"
+                    ]
+                },
+                "osm_value": {
+                    "type": "string",
+                    "examples": [
+                        "residential",
+                        "restaurant"
+                    ]
+                }
+            }
+        },
+        "GeocodeJsonFeatureMeta": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "examples": [
+                        "house",
+                        "street",
+                        "district",
+                        "city",
+                        "county",
+                        "state",
+                        "country",
+                        "locality"
+                    ]
+                },
+                "accuracy": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "label": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "housenumber": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "locality": {
+                    "type": "string"
+                },
+                "postcode": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "district": {
+                    "type": "string"
+                },
+                "county": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "admin": {
+                    "type": "object",
+                    "properties": {
+                        "level2": {
+                            "type": "string"
+                        },
+                        "level3": {
+                            "type": "string"
+                        },
+                        "level4": {
+                            "type": "string"
+                        },
+                        "level5": {
+                            "type": "string"
+                        },
+                        "level6": {
+                            "type": "string"
+                        },
+                        "level7": {
+                            "type": "string"
+                        },
+                        "level8": {
+                            "type": "string"
+                        },
+                        "level9": {
+                            "type": "string"
+                        },
+                        "level10": {
+                            "type": "string"
+                        },
+                        "level11": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "geohash": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9]+(:.+)?$"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
+    }
+}
