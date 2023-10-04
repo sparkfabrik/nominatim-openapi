@@ -12,9 +12,11 @@ Here we track upcoming changes so you can see what changes you might expect in u
  
 ### Added
 - MINOR
-  - Nominatim OpenAPI Specification in JSON format.
+  - Nominatim OpenAPI Specification in JSON format (`/search`, `lookup` endpoints).
   - Makefile rules to simplify project management.
   - Git hooks to compute spec checksum (sha512). Refs: #6.
+  - GeocodeJSON json schema. Refs: #2.
+  - Utilities to bundle OAS spec.
  
 ### Changed
  

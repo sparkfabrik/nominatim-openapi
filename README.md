@@ -30,12 +30,13 @@ This project aims to fill the hole and offer to community a robust, modern, and 
 
 Getting started section shows how to use the [official interactive playground]((https://sparkfabrik.github.io/nominatim-openapi/)) hosted by [Github Pages](https://pages.github.com/).
 If you want to locally run your own playground, you must download this repository (via [zip download](https://github.com/sparkfabrik/nominatim-openapi/archive/refs/heads/main.zip) or `git clone`).
-All relevant files are in `docs/` folder.
+OAS specification and JSON schemas are in `src/` folder, all final files (bundled and minified) are in `docs/` folder.
 
-You can't simply open the `docs/index.html` file in your browser, because of default [Cross-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors). So you need to serve `docs/` folder using a web server running locally.
+You can't simply open the `docs/index.html` file in your browser, because of default [Cross-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors).
+So you need to serve `docs/` folder using a web server running locally.
 
 In a javascript-ready environment (ie. with [node](https://nodejs.org/en) and [npm](https://www.npmjs.com/) installed),
-you can run `npx -y http-server ./docs` in a terminal from the project folder and point your browser to `http://localhost:8080`.
+you can run `make serve` in a terminal from the project folder and point your browser to `http://localhost:8080`.
 
 In a Docker-ready environment, you can run `make ui` to have the playground exposed on `http://localhost:8091`.
 
@@ -56,8 +57,8 @@ When ready, the following table will be updated.
 | Milestone | Task | TBD | To do | Doing | Done | Refs |
 | --------- | ---- | --- | ----- | ----- | ---- | ---- |
 | OpenAPI Spec | `/search` endpoint | | | ■ | | [#2](https://github.com/sparkfabrik/nominatim-openapi/issues/2) |
+| | `/lookup` endpoint | | | | ■ | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
 | | `/reverse` endpoint | | ■ | | | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
-| | `/lookup` endpoint | | ■ | | | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
 | | `/status` endpoint | | ■ | | | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
 | | `/details` endpoint | ■ | | | | |
 | Node CLI | | ■ | | | | |
@@ -73,12 +74,14 @@ then refer to [Contributing Guidelines](https://github.com/sparkfabrik/nominatim
 First of all, search for issues or open one to share your thoughts, needs or intents with the maintainers and the community.
 Then fork and clone this repo, make your changes, commit and push them on a new branch, finally open a PR against `main` branch of this repo.
 
+Pre-requisites: [git](https://git-scm.com/), [make](https://www.gnu.org/software/make/), [npx](https://www.npmjs.com/package/npx) (node and npm), [docker](https://www.docker.com/).
+
 Please activate the Git Hooks provided in `.githooks/` folder before the first change (hooks are bash scripts). You can simply run `make hooks` to activate them.
-- **pre-commit** - compute sha512 checksum of `nominatim.openapi.json` and write on `nominatim.openapi.json.checksum` file.
-- **pre-push** - verify the `nominatim.openapi.json` checksum against `nominatim.openapi.json.checksum` file.
+- **pre-commit** - validate and bundle OAS spec, compute sha512 checksums.
+- **pre-push** - verify the checksums.
 
 In a Docker-ready environment, you can run `make editor` to have the new Swagger Editor up and running on `http://localhost:8092`.
-Automatic file loading and saving is not available, so you must copy/paste the content of `nominatim.openapi.json` in the editor and then copy/paste it back to save the changes.
+Automatic file loading and saving is not available, so you must copy/paste the content of `src/nominatim.openapi.json` in the editor and then copy/paste it back to save the changes.
 
 <p align="center"><img src="./docs/logo-wide.png" width="50%" /></p>
 
