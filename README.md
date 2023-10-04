@@ -1,6 +1,6 @@
 # Nominatim OpenAPI Specification
 
-Unofficial OpenAPI specification for Nominatim API provided by OpenStreetMap project.
+Unofficial OpenAPI Specification (OAS) for Nominatim API provided by OpenStreetMap project (OSM).
 
 <p align="center"><img src="./docs/logo-square.png" width="50%" /></p>
 
@@ -30,7 +30,8 @@ This project aims to fill the hole and offer to community a robust, modern, and 
 
 Getting started section shows how to use the [official interactive playground]((https://sparkfabrik.github.io/nominatim-openapi/)) hosted by [Github Pages](https://pages.github.com/).
 If you want to locally run your own playground, you must download this repository (via [zip download](https://github.com/sparkfabrik/nominatim-openapi/archive/refs/heads/main.zip) or `git clone`).
-OAS specification and JSON schemas are in `src/` folder, all final files (bundled and minified) are in `docs/` folder.
+
+> Source of OAS is in `src/` folder, all final files (bundled and minified) are in `docs/` folder.
 
 You can't simply open the `docs/index.html` file in your browser, because of default [Cross-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors).
 So you need to serve `docs/` folder using a web server running locally.
@@ -57,15 +58,17 @@ When ready, the following table will be updated.
 | Milestone | Task | TBD | To do | Doing | Done | Refs |
 | --------- | ---- | --- | ----- | ----- | ---- | ---- |
 | OpenAPI Spec | `/search` endpoint | | | ■ | | [#2](https://github.com/sparkfabrik/nominatim-openapi/issues/2) |
-| | `/lookup` endpoint | | | | ■ | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
+| | `/lookup` endpoint | | | ■ | | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
 | | `/reverse` endpoint | | ■ | | | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
 | | `/status` endpoint | | ■ | | | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
 | | `/details` endpoint | ■ | | | | |
+| Test suite | | ■ | | | | |
 | Node CLI | | ■ | | | | |
 
 ## Contributing
 
 Any contribution is welcome!
+
 Please read and accept our [Code of Conduct](https://github.com/sparkfabrik/nominatim-openapi/blob/main/CODE_OF_CONDUCT.md),
 then refer to [Contributing Guidelines](https://github.com/sparkfabrik/nominatim-openapi/blob/main/CONTRIBUTING.md) before opening issues or pull requests.
 
@@ -75,6 +78,8 @@ First of all, search for issues or open one to share your thoughts, needs or int
 Then fork and clone this repo, make your changes, commit and push them on a new branch, finally open a PR against `main` branch of this repo.
 
 Pre-requisites: [git](https://git-scm.com/), [make](https://www.gnu.org/software/make/), [npx](https://www.npmjs.com/package/npx) (node and npm), [docker](https://www.docker.com/).
+
+Editable source of OAS is in `src/` folder. You can validate it running `make validate`. You can bundle it running `make bundle`.
 
 Please activate the Git Hooks provided in `.githooks/` folder before the first change (hooks are bash scripts). You can simply run `make hooks` to activate them.
 - **pre-commit** - validate and bundle OAS spec, compute sha512 checksums.
@@ -124,6 +129,22 @@ Website: https://nominatim.org
 Repository: https://github.com/osm-search
 
 > Nominatim uses OpenStreetMap data to find locations on Earth by name and address (geocoding). It can also do the reverse, find an address for any location on the planet.
+
+### What is GeoJSON?
+
+Website: https://geojson.org
+
+Repository: https://github.com/geojson
+
+> GeoJSON is a format for encoding a variety of geographic data structures.
+
+### What is GeocodeJSON?
+
+Website: https://github.com/geocoders/geocodejson-spec/tree/master/draft
+
+Repository: https://github.com/geocoders/geocodejson-spec
+
+> This specification attempts to create a standard for handling geocoding results.
 
 ### What is Subresource Integrity (SRI)
 
