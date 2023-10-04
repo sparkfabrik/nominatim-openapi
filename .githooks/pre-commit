@@ -1,24 +1,28 @@
 #!/bin/bash
 
-OAS_FILE=docs/nominatim.openapi.json
-OAS_MIN_FILE=${OAS_FILE/.json/.min.json}
-SCHEMA_FILE=docs/geocodejson.schema.json
-SCHEMA_MIN_FILE=${SCHEMA_FILE/.json/.min.json}
+INPUT_DIR=src
+OUTPUT_DIR=docs
+
+OAS_FILE=nominatim.openapi.json
+SCHEMA_FILE=geocodejson.schema.json
 
 SHA_CMD=shasum
 SHA_VERSION=512
 SHA_PREFIX="sha$SHA_VERSION"
 
 NPX_CMD=npx
-VALIDATE_CMD="$NPX_CMD -y @apidevtools/swagger-cli validate"
-BUNDLE_OAS_CMD="$NPX_CMD -y @apidevtools/swagger-cli bundle"
-BUNDLE_SCHEMA_CMD="$NPX_CMD -y json-dereference-cli"
-MINIFY_CMD="$NPX_CMD -y pretty-mini-json"
+SWAGGER_CLI_VERSION="4.0.4"
+PRETTY_MINI_JSON_VERSION="1.1.4"
+JSON_DEREFERENCE_CLI_VERSION="0.1.2"
+VALIDATE_CMD="$NPX_CMD -y @apidevtools/swagger-cli@$SWAGGER_CLI_VERSION validate"
+BUNDLE_OAS_CMD="$NPX_CMD -y @apidevtools/swagger-cli@$SWAGGER_CLI_VERSION bundle"
+BUNDLE_SCHEMA_CMD="$NPX_CMD -y json-dereference-cli@$JSON_DEREFERENCE_CLI_VERSION"
+MINIFY_CMD="$NPX_CMD -y pretty-mini-json@$PRETTY_MINI_JSON_VERSION"
 
 # OpenAPI spec and JSON schema files must exist
-if [ ! -f $OAS_FILE ] || [ ! -f $SCHEMA_FILE ]
+if [ ! -f "$INPUT_DIR/$OAS_FILE" ] || [ ! -f "$INPUT_DIR/$SCHEMA_FILE" ]
 then
-    echo "$OAS_FILE or $OAS_FILE files are missing, abort"
+    echo "$OAS_FILE or $OAS_FILE files are missing in $INPUT_DIR folder, abort"
     exit 1
 fi
 
@@ -30,15 +34,15 @@ then
 fi
 
 # OpenAPI spec must be valid
-if ! $VALIDATE_CMD $OAS_FILE &> /dev/null
+if ! $VALIDATE_CMD $INPUT_DIR/$OAS_FILE &> /dev/null
 then
-    echo "$OAS_FILE file is not a valid OpenAPI spec, please check"
+    echo "$OAS_FILE file in $INPUT_DIR folder is not a valid OpenAPI spec, please check"
     exit 1
 fi
 
 # Create bundles
-$BUNDLE_OAS_CMD $OAS_FILE 2> /dev/null | $MINIFY_CMD -o $OAS_MIN_FILE 2> /dev/null
-$BUNDLE_SCHEMA_CMD -s $SCHEMA_FILE -o $SCHEMA_MIN_FILE 2> /dev/null
+$BUNDLE_OAS_CMD $INPUT_DIR/$OAS_FILE 2> /dev/null | $MINIFY_CMD -o $OUTPUT_DIR/$OAS_FILE 2> /dev/null
+$BUNDLE_SCHEMA_CMD -s $INPUT_DIR/$SCHEMA_FILE -o $OUTPUT_DIR/$SCHEMA_FILE 2> /dev/null
 
 # shasum must be installed
 if ! command -v $SHA_CMD &> /dev/null
@@ -48,20 +52,14 @@ then
 fi
 
 # Compute checksums
-SHA_OAS_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OAS_FILE | cut -d" " -f 1`
-SHA_SCHEMA_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $SCHEMA_FILE | cut -d" " -f 1`
-SHA_OAS_MIN_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OAS_MIN_FILE | cut -d" " -f 1`
-SHA_SCHEMA_MIN_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $SCHEMA_MIN_FILE | cut -d" " -f 1`
+SHA_OAS_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OUTPUT_DIR/$OAS_FILE | cut -d" " -f 1`
+SHA_SCHEMA_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OUTPUT_DIR/$SCHEMA_FILE | cut -d" " -f 1`
 
-echo "Checksum ($OAS_FILE.checksum): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
-echo -n "$SHA_PREFIX-$SHA_OAS_CHECKSUM" > $OAS_FILE.checksum
-echo "Checksum ($SCHEMA_FILE.checksum): $SHA_PREFIX-$SHA_SCHEMA_CHECKSUM"
-echo -n "$SHA_PREFIX-$SHA_SCHEMA_CHECKSUM" > $SCHEMA_FILE.checksum
-echo "Checksum ($OAS_MIN_FILE.checksum): $SHA_PREFIX-$SHA_OAS_MIN_CHECKSUM"
-echo -n "$SHA_PREFIX-$SHA_OAS_MIN_CHECKSUM" > $OAS_MIN_FILE.checksum
-echo "Checksum ($SCHEMA_MIN_FILE.checksum): $SHA_PREFIX-$SHA_SCHEMA_MIN_CHECKSUM"
-echo -n "$SHA_PREFIX-$SHA_SCHEMA_MIN_CHECKSUM" > $SCHEMA_MIN_FILE.checksum
+echo "Checksum ($OUTPUT_DIR/$OAS_FILE.checksum): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
+echo -n "$SHA_PREFIX-$SHA_OAS_CHECKSUM" > $OUTPUT_DIR/$OAS_FILE.checksum
+echo "Checksum ($OUTPUT_DIR/$SCHEMA_FILE.checksum): $SHA_PREFIX-$SHA_SCHEMA_CHECKSUM"
+echo -n "$SHA_PREFIX-$SHA_SCHEMA_CHECKSUM" > $OUTPUT_DIR/$SCHEMA_FILE.checksum
 
 # Stage new checksums
-git add $OAS_FILE.checksum $SCHEMA_FILE.checksum $OAS_MIN_FILE.checksum $SCHEMA_MIN_FILE.checksum
+git add $OUTPUT_DIR/$OAS_FILE.checksum $OUTPUT_DIR/$SCHEMA_FILE.checksum
 exit 0
