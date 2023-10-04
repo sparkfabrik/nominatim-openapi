@@ -1,18 +1,19 @@
 #!/bin/bash
 
-OAS_FILE=docs/nominatim.openapi.json
-OAS_MIN_FILE=${OAS_FILE/.json/.min.json}
-SCHEMA_FILE=docs/geocodejson.schema.json
-SCHEMA_MIN_FILE=${SCHEMA_FILE/.json/.min.json}
+INPUT_DIR=src
+OUTPUT_DIR=docs
+
+OAS_FILE=nominatim.openapi.json
+SCHEMA_FILE=geocodejson.schema.json
 
 SHA_CMD=shasum
 SHA_VERSION=512
 SHA_PREFIX="sha$SHA_VERSION"
 
 # OpenAPI spec and JSON schema files must exist
-if [ ! -f $OAS_FILE ] || [ ! -f $OAS_MIN_FILE ] || [ ! -f $SCHEMA_FILE ] || [ ! -f $SCHEMA_MIN_FILE ]
+if [ ! -f "$OUTPUT_DIR/$OAS_FILE" ] || [ ! -f "$OUTPUT_DIR/$SCHEMA_FILE" ]
 then
-    echo "$OAS_FILE or $OAS_MIN_FILE or $SCHEMA_FILE or $SCHEMA_MIN_FILE files are missing, abort"
+    echo "$OAS_FILE or $SCHEMA_FILE files in $OUTPUT_DIR folder are missing, abort"
     exit 1
 fi
 
@@ -24,48 +25,30 @@ then
 fi
 
 # Checksums must exists
-if [ ! -f "$OAS_FILE.checksum" ] || [ ! -f "$OAS_MIN_FILE.checksum" ] || [ ! -f "$SCHEMA_FILE.checksum" ] || [ ! -f "$SCHEMA_MIN_FILE.checksum" ]
+if [ ! -f "$OUTPUT_DIR/$OAS_FILE.checksum" ] || [ ! -f "$OUTPUT_DIR/$SCHEMA_FILE.checksum" ]
 then
-    echo "Checksum files are missing, abort"
+    echo "$OAS_FILE.checksum or $SCHEMA_FILE.checksum files in $OUTPUT_DIR folder are missing, abort"
     exit 1
 fi
 
 # Compute checksums
-SHA_OAS_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OAS_FILE | cut -d" " -f 1`
-SHA_SCHEMA_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $SCHEMA_FILE | cut -d" " -f 1`
-SHA_OAS_MIN_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OAS_MIN_FILE | cut -d" " -f 1`
-SHA_SCHEMA_MIN_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $SCHEMA_MIN_FILE | cut -d" " -f 1`
+SHA_OAS_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OUTPUT_DIR/$OAS_FILE | cut -d" " -f 1`
+SHA_SCHEMA_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OUTPUT_DIR/$SCHEMA_FILE | cut -d" " -f 1`
 
-if ! grep "$SHA_PREFIX-$SHA_OAS_CHECKSUM" $OAS_FILE.checksum &>/dev/null
+if ! grep "$SHA_PREFIX-$SHA_OAS_CHECKSUM" $OUTPUT_DIR/$OAS_FILE.checksum &>/dev/null
 then
-    echo "wrong checksum for $OAS_FILE, please verify"
+    echo "Wrong checksum for $OAS_FILE, please verify"
     exit 1
 else
-    echo "Checksum ($OAS_FILE): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
+    echo "Checksum ($OUTPUT_DIR/$OAS_FILE): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
 fi
 
-if ! grep "$SHA_PREFIX-$SHA_SCHEMA_CHECKSUM" $SCHEMA_FILE.checksum &>/dev/null
+if ! grep "$SHA_PREFIX-$SHA_SCHEMA_CHECKSUM" $OUTPUT_DIR/$SCHEMA_FILE.checksum &>/dev/null
 then
-    echo "wrong checksum for $SCHEMA_FILE, please verify"
+    echo "Wrong checksum for $OUTPUT_DIR/$SCHEMA_FILE, please verify"
     exit 1
 else
-    echo "Checksum ($SCHEMA_FILE): $SHA_PREFIX-$SHA_SCHEMA_CHECKSUM"
-fi
-
-if ! grep "$SHA_PREFIX-$SHA_OAS_MIN_CHECKSUM" $OAS_MIN_FILE.checksum &>/dev/null
-then
-    echo "wrong checksum for $OAS_MIN_FILE, please verify"
-    exit 1
-else
-    echo "Checksum ($OAS_MIN_FILE): $SHA_PREFIX-$SHA_OAS_MIN_CHECKSUM"
-fi
-
-if ! grep "$SHA_PREFIX-$SHA_SCHEMA_MIN_CHECKSUM" $SCHEMA_MIN_FILE.checksum &>/dev/null
-then
-    echo "wrong checksum for $SCHEMA_MIN_FILE, please verify"
-    exit 1
-else
-    echo "Checksum ($SCHEMA_MIN_FILE): $SHA_PREFIX-$SHA_SCHEMA_MIN_CHECKSUM"
+    echo "Checksum ($OUTPUT_DIR/$SCHEMA_FILE): $SHA_PREFIX-$SHA_SCHEMA_CHECKSUM"
 fi
 
 exit 0
