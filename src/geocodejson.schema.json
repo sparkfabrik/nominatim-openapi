@@ -1,5 +1,9 @@
 {
-    "title": "GeocodeJSON schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://sparkfabrik.github.io/nominatim-openapi/geocodejson.schema.json",
+    "title": "GeocodeJSON Schema",
+    "description": "GeocodeJSON is an extension of the GeoJSON standard that aim to handle results from geocoding services.",
+    "type": "object",
     "allOf": [
         {
             "$ref": "https://geojson.org/schema/GeoJSON.json"
@@ -7,194 +11,190 @@
     ],
     "properties": {
         "type": {
-            "const": "FeatureCollection"
+            "const": "FeatureCollection",
+            "description": "REQUIRED. GeocodeJSON result is a FeatureCollection."
         },
         "geocoding": {
-            "$ref": "#/$defs/GeocodeJsonMeta"
-        },
-        "features": {
-            "type": "array",
-            "items": {
-                "$ref": "#/$defs/GeocodeJsonFeature"
-            }
-        }
-    },
-    "required": [
-        "geocoding"
-    ],
-    "$defs": {
-        "GeocodeJsonMeta": {
             "type": "object",
+            "description": "REQUIRED. Namespace.",
             "properties": {
                 "version": {
                     "type": "string",
-                    "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+                    "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+                    "description": "REQUIRED. A semver.org compliant version number. Describes the version of the GeocodeJSON spec that is implemented by this instance.",
+                    "examples": [
+                        "0.1.0",
+                        "1.0.0-beta1",
+                        "2.2.4"
+                    ]
                 },
                 "licence": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "OPTIONAL. Default: null. The licence of the data. In case of multiple sources, and then multiple licences, can be an object with one key by source.",
+                    "examples": [
+                        "ODbL"
+                    ]
                 },
                 "attribution": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "OPTIONAL. Default: null. The attribution of the data. In case of multiple sources, and then multiple attributions, can be an object with one key by source.",
+                    "examples": [
+                        "OpenStreetMap Contributors"
+                    ]
                 },
                 "query": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "OPTIONAL. Default: null. The query that has been issued to trigger the search.",
+                    "examples": [
+                        "24 allée de Bercy 75012 Paris"
+                    ]
                 }
             },
             "required": [
                 "version"
             ]
         },
-        "GeocodeJsonFeature": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "Feature"
-                },
+        "features": {
+            "type": "array",
+            "description": "REQUIRED. As per GeoJSON spec.",
+            "items": {
+                "type": "object",
+                "description": "OPTIONAL. An array of feature objects.",
                 "properties": {
-                    "type": "object",
-                    "properties": {
-                        "geocoding": {
-                            "$ref": "#/$defs/OSMFeatureMeta"
-                        }
+                    "type": {
+                        "const": "Feature",
+                        "description": "REQUIRED. As per GeoJSON spec."
                     },
-                    "required": [
-                        "geocoding"
-                    ]
-                }
-            }
-        },
-        "OSMFeatureMeta": {
-            "type": "object",
-            "allOf": [
-                {
-                    "$ref": "#/$defs/GeocodeJsonFeatureMeta"
-                }
-            ],
-            "properties": {
-                "osm_type": {
-                    "type": "string",
-                    "examples": [
-                        "node",
-                        "way",
-                        "relation"
-                    ]
-                },
-                "osm_id": {
-                    "type": "integer"
-                },
-                "osm_key": {
-                    "type": "string",
-                    "examples": [
-                        "boundary",
-                        "highway",
-                        "amenity"
-                    ]
-                },
-                "osm_value": {
-                    "type": "string",
-                    "examples": [
-                        "residential",
-                        "restaurant"
-                    ]
-                }
-            }
-        },
-        "GeocodeJsonFeatureMeta": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "examples": [
-                        "house",
-                        "street",
-                        "district",
-                        "city",
-                        "county",
-                        "state",
-                        "country",
-                        "locality"
-                    ]
-                },
-                "accuracy": {
-                    "type": "integer",
-                    "minimum": 0
-                },
-                "label": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "housenumber": {
-                    "type": "string"
-                },
-                "street": {
-                    "type": "string"
-                },
-                "locality": {
-                    "type": "string"
-                },
-                "postcode": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "district": {
-                    "type": "string"
-                },
-                "county": {
-                    "type": "string"
-                },
-                "state": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "admin": {
-                    "type": "object",
                     "properties": {
-                        "level2": {
-                            "type": "string"
+                        "type": "object",
+                        "description": "REQUIRED. As per GeoJSON spec.",
+                        "properties": {
+                            "geocoding": {
+                                "type": "object",
+                                "description": "REQUIRED. Namespace.",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "description": "REQUIRED. One of house, street, locality, city, region, country.",
+                                        "examples": [
+                                            "house",
+                                            "street",
+                                            "district",
+                                            "city",
+                                            "county",
+                                            "state",
+                                            "country",
+                                            "locality"
+                                        ]
+                                    },
+                                    "accuracy": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "description": "OPTIONAL. Result accuracy, in meters.",
+                                        "examples": [
+                                            20
+                                        ]
+                                    },
+                                    "label": {
+                                        "type": "string",
+                                        "description": "RECOMMENDED. Suggested label for the result.",
+                                        "examples": [
+                                            "My Shoes Shop, 64 rue de Metz 59280 Armentières"
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. Name of the place.",
+                                        "examples": [
+                                            "My Shoes Shop"
+                                        ]
+                                    },
+                                    "housenumber": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. Housenumber of the place.",
+                                        "examples": [
+                                            "64"
+                                        ]
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. Street of the place.",
+                                        "examples": [
+                                            "Rue de Metz"
+                                        ]
+                                    },
+                                    "locality": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. Locality of the place.",
+                                        "examples": [
+                                            "Les Clarons"
+                                        ]
+                                    },
+                                    "postcode": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. Postcode of the place.",
+                                        "examples": [
+                                            "59280"
+                                        ]
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. City of the place.",
+                                        "examples": [
+                                            "Armentières"
+                                        ]
+                                    },
+                                    "district": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. District of the place."
+                                    },
+                                    "county": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. County of the place."
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. State of the place."
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "description": "OPTIONAL. Country of the place.",
+                                        "examples": [
+                                            "France"
+                                        ]
+                                    },
+                                    "admin": {
+                                        "type": "object",
+                                        "description": "OPTIONAL. Administratives boundaries the feature is included in, as defined in http://wiki.osm.org/wiki/Key:admin_level#admin_level.",
+                                        "patternProperties": {
+                                            "^level[0-9]+": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "geohash": {
+                                        "type": "string",
+                                        "pattern": "^[a-zA-Z0-9]+(:.+)?$",
+                                        "description": "OPTIONAL. Geohash encoding of coordinates (see http://geohash.org/site/tips.html).",
+                                        "examples": [
+                                            "Ehugh5oofiToh9aWe3heemu7ighee8"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "type"
+                                ]
+                            }
                         },
-                        "level3": {
-                            "type": "string"
-                        },
-                        "level4": {
-                            "type": "string"
-                        },
-                        "level5": {
-                            "type": "string"
-                        },
-                        "level6": {
-                            "type": "string"
-                        },
-                        "level7": {
-                            "type": "string"
-                        },
-                        "level8": {
-                            "type": "string"
-                        },
-                        "level9": {
-                            "type": "string"
-                        },
-                        "level10": {
-                            "type": "string"
-                        },
-                        "level11": {
-                            "type": "string"
-                        }
+                        "required": [
+                            "geocoding"
+                        ]
                     }
-                },
-                "geohash": {
-                    "type": "string",
-                    "pattern": "^[a-zA-Z0-9]+(:.+)?$"
                 }
-            },
-            "required": [
-                "type"
-            ]
+            }
         }
-    }
+    },
+    "required": [
+        "geocoding"
+    ]
 }

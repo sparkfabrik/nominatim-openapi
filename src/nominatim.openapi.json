@@ -287,7 +287,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/GeocodeJson"
+                                    "$ref": "#/components/schemas/OSMGeocodeJson"
                                 }
                             }
                         }
@@ -454,7 +454,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/GeocodeJson"
+                                        "$ref": "#/components/schemas/OSMGeocodeJson"
                                     }
                                 }
                             }
@@ -469,8 +469,59 @@
     },
     "components": {
         "schemas": {
-            "GeocodeJson": {
-                "$ref": "geocodejson.schema.json"
+            "OSMGeocodeJson": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "geocodejson.schema.json"
+                    }
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "geocoding": {
+                                            "type": "object",
+                                            "properties": {
+                                                "osm_type": {
+                                                    "type": "string",
+                                                    "examples": [
+                                                        "node",
+                                                        "way",
+                                                        "relation"
+                                                    ]
+                                                },
+                                                "osm_id": {
+                                                    "type": "integer"
+                                                },
+                                                "osm_key": {
+                                                    "type": "string",
+                                                    "examples": [
+                                                        "boundary",
+                                                        "highway",
+                                                        "amenity"
+                                                    ]
+                                                },
+                                                "osm_value": {
+                                                    "type": "string",
+                                                    "examples": [
+                                                        "residential",
+                                                        "restaurant"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
