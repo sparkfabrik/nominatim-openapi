@@ -22,7 +22,7 @@ MINIFY_CMD="$NPX_CMD -y pretty-mini-json@$PRETTY_MINI_JSON_VERSION"
 # OpenAPI spec and JSON schema files must exist
 if [ ! -f "$INPUT_DIR/$OAS_FILE" ] || [ ! -f "$INPUT_DIR/$SCHEMA_FILE" ]
 then
-    echo "$OAS_FILE or $OAS_FILE files are missing in $INPUT_DIR folder, abort"
+    echo "$OAS_FILE or $SCHEMA_FILE files in $INPUT_DIR folder are missing, abort"
     exit 1
 fi
 
