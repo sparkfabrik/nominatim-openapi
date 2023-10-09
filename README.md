@@ -104,6 +104,16 @@ Latest version: v3.1.0
 
 > The OpenAPI Specification (OAS) is a specification language for HTTP APIs that provides a standardized means to define your API to others. You can quickly discover how an API works, configure infrastructure, generate client code, and create test cases for your APIs. Read more about how you can get control of your APIs now, understand the full API lifecycle and communicate with developer communities inside and outside your organization.
 
+### What is JSON Schema?
+
+Website: https://json-schema.org
+
+Repository: https://github.com/json-schema-org
+
+Latest version: v2020-12
+
+> JSON Schema enables the confident and reliable use of the JSON data format.
+
 ### What is Swagger UI?
 
 Website: https://swagger.io/tools/swagger-ui/
@@ -162,8 +172,7 @@ Website: https://en.wikipedia.org/wiki/SHA-2
 
 Nominatim (and OpenStreetMap) project have a long story and a non trivial development path, so this OpenAPI specification reflects some features of actual software and official documentation.
 
-- The `format` parameter ([docs](https://nominatim.org/release-docs/develop/api/Search/#output-format)) accepts 5 values (`xml`, `json`, `jsonv2`, `geojson`, `geocodejson`), but only `jsonv2` (the default one) is described by this specification in `components.schemas` (see [Nominatim/issues/1697](https://github.com/osm-search/Nominatim/issues/1697#issuecomment-726232719) and [OpenAPI-Specification/issues/2031](https://github.com/OAI/OpenAPI-Specification/issues/2031) for further informations).
-- In `jsonv2` responses some numeric values are represented by strings for historical reasons (see [this discussion](https://github.com/osm-search/Nominatim/discussions/3115)), so this specification.
+- The `format` parameter ([docs](https://nominatim.org/release-docs/develop/api/Search/#output-format)) accepts 5 values (`xml`, `json`, `jsonv2`, `geojson`, `geocodejson`), where `jsonv2` is the default one, but this specification describes only the `geocodejson` format in `components.schemas` (see [Nominatim/discussions/3115](https://github.com/osm-search/Nominatim/discussions/3115#discussioncomment-6486249), [Nominatim/issues/1697](https://github.com/osm-search/Nominatim/issues/1697#issuecomment-726232719), and [OpenAPI-Specification/issues/2031](https://github.com/OAI/OpenAPI-Specification/issues/2031) for further informations).
 
 ## Open Source Software
 
@@ -171,7 +180,8 @@ This project would not exist without open source, it is open source, and the com
 
 Here is a list of external contributions (code and discussions) starting from work for this project:
 - fix typos in Nominatim error messages: [Nominatim/pull/3112](https://github.com/osm-search/Nominatim/pull/3112)
-- discussion about `jsonv2` format of Nominatim responses: [Nominatim/discussions/3115](https://github.com/osm-search/Nominatim/discussions/3115)
+- discussion about `jsonv2` and `geocodejson` formats of Nominatim responses: [Nominatim/discussions/3115](https://github.com/osm-search/Nominatim/discussions/3115)
+- proposal of a JSON schema for `geocodejson` spec: [geocodejson-spec/issues/21](https://github.com/geocoders/geocodejson-spec/issues/21)
 - ...
 
 ## License
