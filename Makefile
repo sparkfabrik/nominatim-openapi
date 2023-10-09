@@ -1,6 +1,7 @@
 SWAGGER_UI_VERSION ?= v5.4.2
 SWAGGER_ED_VERSION ?= next-v5-unprivileged
 SWAGGER_CLI_VERSION ?= 4.0.4
+AJV_CLI_VERSION ?= 5.0.0
 PRETTY_MINI_JSON_VERSION ?= 1.1.4
 JSON_DEREFERENCE_CLI_VERSION ?= 0.1.2
 HTTP_SERVER_VERSION ?= 14.1.1
@@ -33,11 +34,14 @@ checksum:
 verify:
 	.githooks/pre-push && echo "Checksum ok"
 
-validate:
-	echo "Validating Nominatim OpenAPI spec"
-	npx -y @apidevtools/swagger-cli@$(SWAGGER_CLI_VERSION) validate src/nominatim.openapi.json
-
 bundle:
 	echo "Building the Nominatim OpenAPI spec bundle"
 	npx -y @apidevtools/swagger-cli@$(SWAGGER_CLI_VERSION) bundle src/nominatim.openapi.json | npx -y pretty-mini-json@$(PRETTY_MINI_JSON_VERSION) -o docs/nominatim.openapi.json
 	npx -y json-dereference-cli@$(JSON_DEREFERENCE_CLI_VERSION) -s src/geocodejson.schema.json -o docs/geocodejson.schema.json
+
+validate:
+	echo "Validating the Nominatim OpenAPI spec bundle"
+	npx -y @apidevtools/swagger-cli@$(SWAGGER_CLI_VERSION) validate docs/nominatim.openapi.json
+	npx -y ajv-cli@$(AJV_CLI_VERSION) compile --spec=draft2020 -s docs/geocodejson.schema.json
+
+build: bundle validate checksum verify
