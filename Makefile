@@ -42,6 +42,6 @@ bundle:
 validate:
 	echo "Validating the Nominatim OpenAPI spec bundle"
 	npx -y @apidevtools/swagger-cli@$(SWAGGER_CLI_VERSION) validate docs/nominatim.openapi.json
-	npx -y ajv-cli@$(AJV_CLI_VERSION) compile --spec=draft2020 -s docs/geocodejson.schema.json
+	npx -y ajv-cli@$(AJV_CLI_VERSION) compile -s docs/geocodejson.schema.json
 
 build: bundle validate checksum verify
