@@ -77,9 +77,9 @@ then refer to [Contributing Guidelines](https://github.com/sparkfabrik/nominatim
 First of all, search for issues or open one to share your thoughts, needs or intents with the maintainers and the community.
 Then fork and clone this repo, make your changes, commit and push them on a new branch, finally open a PR against `main` branch of this repo.
 
-Pre-requisites: [git](https://git-scm.com/), [make](https://www.gnu.org/software/make/), [npx](https://www.npmjs.com/package/npx) (node and npm), [docker](https://www.docker.com/).
+Pre-requisites: [git](https://git-scm.com/), [make](https://www.gnu.org/software/make/), [shasum](https://www.commandlinux.com/man-page/man1/shasum.1.html), [npx](https://www.npmjs.com/package/npx) (node and npm), [docker](https://www.docker.com/).
 
-Editable source of OAS is in `src/` folder. You can validate it running `make validate`. You can bundle it running `make bundle`.
+Editable source of OAS is in `src/` folder. You can validate it running `make validate`. You can bundle it running `make build`.
 
 Please activate the Git Hooks provided in `.githooks/` folder before the first change (hooks are bash scripts). You can simply run `make hooks` to activate them.
 - **pre-commit** - validate and bundle OAS spec, compute sha512 checksums.
