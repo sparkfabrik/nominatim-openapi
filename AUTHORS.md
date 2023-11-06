@@ -12,6 +12,6 @@ Alessio Cimarelli (https://github.com/jenkin)
 
 Contributors
 ------------
-
+Alan Sprecacenere (https://github.com/tegola)
 
 The version control system provides attribution for specific lines of code.
