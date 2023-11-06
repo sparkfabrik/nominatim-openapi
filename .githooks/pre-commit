@@ -4,7 +4,6 @@ INPUT_DIR=src
 OUTPUT_DIR=docs
 
 OAS_FILE=nominatim.openapi.json
-SCHEMA_FILE=geocodejson.schema.json
 
 SHA_CMD=shasum
 SHA_VERSION=512
@@ -20,9 +19,9 @@ BUNDLE_SCHEMA_CMD="$NPX_CMD -y json-dereference-cli@$JSON_DEREFERENCE_CLI_VERSIO
 MINIFY_CMD="$NPX_CMD -y pretty-mini-json@$PRETTY_MINI_JSON_VERSION"
 
 # OpenAPI spec and JSON schema files must exist
-if [ ! -f "$INPUT_DIR/$OAS_FILE" ] || [ ! -f "$INPUT_DIR/$SCHEMA_FILE" ]
+if [ ! -f "$INPUT_DIR/$OAS_FILE" ]
 then
-    echo "$OAS_FILE or $SCHEMA_FILE files in $INPUT_DIR folder are missing, abort"
+    echo "$OAS_FILE file in $INPUT_DIR folder is missing, abort"
     exit 1
 fi
 
@@ -42,7 +41,6 @@ fi
 
 # Create bundles
 $BUNDLE_OAS_CMD $INPUT_DIR/$OAS_FILE 2> /dev/null | $MINIFY_CMD -o $OUTPUT_DIR/$OAS_FILE 2> /dev/null
-$BUNDLE_SCHEMA_CMD -s $INPUT_DIR/$SCHEMA_FILE -o $OUTPUT_DIR/$SCHEMA_FILE 2> /dev/null
 
 # shasum must be installed
 if ! command -v $SHA_CMD &> /dev/null
@@ -53,13 +51,10 @@ fi
 
 # Compute checksums
 SHA_OAS_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OUTPUT_DIR/$OAS_FILE | cut -d" " -f 1`
-SHA_SCHEMA_CHECKSUM=`$SHA_CMD -a $SHA_VERSION $OUTPUT_DIR/$SCHEMA_FILE | cut -d" " -f 1`
 
 echo "Checksum ($OUTPUT_DIR/$OAS_FILE.checksum): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
 echo -n "$SHA_PREFIX-$SHA_OAS_CHECKSUM" > $OUTPUT_DIR/$OAS_FILE.checksum
-echo "Checksum ($OUTPUT_DIR/$SCHEMA_FILE.checksum): $SHA_PREFIX-$SHA_SCHEMA_CHECKSUM"
-echo -n "$SHA_PREFIX-$SHA_SCHEMA_CHECKSUM" > $OUTPUT_DIR/$SCHEMA_FILE.checksum
 
 # Stage new checksums
-git add $OUTPUT_DIR/$OAS_FILE.checksum $OUTPUT_DIR/$SCHEMA_FILE.checksum
+git add $OUTPUT_DIR/$OAS_FILE.checksum
 exit 0
