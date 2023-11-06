@@ -60,7 +60,7 @@ When ready, the following table will be updated.
 | OpenAPI Spec | `/search` endpoint | | | | ■ | [#2](https://github.com/sparkfabrik/nominatim-openapi/issues/2) |
 | | `/lookup` endpoint | | | | ■ | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
 | | `/reverse` endpoint | | ■ | | | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
-| | `/status` endpoint | | ■ | | | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
+| | `/status` endpoint | | | ■ | | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
 | | `/details` endpoint | ■ | | | | |
 | Test suite | | ■ | | | | |
 | Node CLI | | ■ | | | | |
@@ -179,13 +179,11 @@ Nominatim (and OpenStreetMap) project have a long story and a non trivial develo
 This project would not exist without open source, it is open source, and the community behind it contributes to open source.
 
 Here is a list of external contributions (code and discussions) starting from work for this project:
+- release of the official schema for `geocodejson` spec: [geocodejson-spec/pull/25](https://github.com/geocoders/geocodejson-spec/pull/25) (see also [geocodejson-spec/issues/21](https://github.com/geocoders/geocodejson-spec/issues/21))
 - fix typos in Nominatim error messages: [Nominatim/pull/3112](https://github.com/osm-search/Nominatim/pull/3112)
-- discussion about `jsonv2` and `geocodejson` formats of Nominatim responses: [Nominatim/discussions/3115](https://github.com/osm-search/Nominatim/discussions/3115)
-- proposal of a JSON schema for `geocodejson` spec: [geocodejson-spec/issues/21](https://github.com/geocoders/geocodejson-spec/issues/21)
-- pull request the GeocodeJSON schema: [geocodejson-spec/pull/25](https://github.com/geocoders/geocodejson-spec/pull/25)
-- release of an unofficial schema for [GeocodeJSON](https://semver.org/) format (see [jenkin/json-schema-bricks](https://github.com/jenkin/json-schema-bricks))
 - release of an unofficial schema for [GeoHash](http://geohash.org/) format (see [jenkin/json-schema-bricks](https://github.com/jenkin/json-schema-bricks))
 - release of an unofficial schema for [SemVer](https://semver.org/) format (see [jenkin/json-schema-bricks](https://github.com/jenkin/json-schema-bricks))
+- discussion about `jsonv2` and `geocodejson` formats of Nominatim responses: [Nominatim/discussions/3115](https://github.com/osm-search/Nominatim/discussions/3115)
 - ...
 
 ## License
