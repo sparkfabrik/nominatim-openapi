@@ -472,7 +472,7 @@
             "OSMGeocodeJson": {
                 "allOf": [
                     {
-                        "$ref": "geocodejson.schema.json"
+                        "$ref": "https://jenkin.dev/json-schema-bricks/geocodejson.schema.min.json"
                     },
                     {
                         "type": "object",

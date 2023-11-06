@@ -14,12 +14,10 @@ all: build validate checksum verify
 build:
 	@echo "Building the Nominatim OpenAPI spec bundle"
 	npx -y @apidevtools/swagger-cli@$(SWAGGER_CLI_VERSION) bundle src/nominatim.openapi.json | npx -y pretty-mini-json@$(PRETTY_MINI_JSON_VERSION) -o docs/nominatim.openapi.json
-	npx -y json-dereference-cli@$(JSON_DEREFERENCE_CLI_VERSION) -s src/geocodejson.schema.json -o docs/geocodejson.schema.json
 
 validate:
 	@echo "Validating the Nominatim OpenAPI spec bundle"
 	npx -y @apidevtools/swagger-cli@$(SWAGGER_CLI_VERSION) validate docs/nominatim.openapi.json
-	npx -y ajv-cli@$(AJV_CLI_VERSION) compile -s docs/geocodejson.schema.json
 
 checksum:
 	@echo "Computing spec checksum"
@@ -30,7 +28,7 @@ verify:
 
 ui:
 	@echo "Swagger UI running at http://localhost:$(SWAGGER_UI_PORT)"
-	docker run --rm -p $(SWAGGER_UI_PORT):8080 -v $(PWD)/src/nominatim.openapi.json:/tmp/nominatim.openapi.json -v $(PWD)/src/geocodejson.schema.json:/tmp/geocodejson.schema.json -e SWAGGER_JSON=/tmp/nominatim.openapi.json swaggerapi/swagger-ui:$(SWAGGER_UI_VERSION)
+	docker run --rm -p $(SWAGGER_UI_PORT):8080 -v $(PWD)/src/nominatim.openapi.json:/tmp/nominatim.openapi.json -e SWAGGER_JSON=/tmp/nominatim.openapi.json swaggerapi/swagger-ui:$(SWAGGER_UI_VERSION)
 	echo "Shutdown Swagger UI"
 
 editor:
