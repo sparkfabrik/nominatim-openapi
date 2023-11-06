@@ -465,6 +465,43 @@
                     "Lookup"
                 ]
             }
+        },
+        "/status": {
+            "get": {
+                "summary": "Report on the state of the service and database",
+                "operationId": "status",
+                "description": "Returns the state of the service.",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "text",
+                                "json"
+                            ],
+                            "default": "json"
+                        },
+                        "in": "query",
+                        "name": "format",
+                        "description": "Selects the output format. See [Status Output Formats](https://nominatim.org/release-docs/develop/api/Status/#output) for details on each format. If not specified, it is equal to `text`."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "If `format` is `json` always returns a HTTP code 200, when the status call could be executed.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Status"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Status"
+                ]
+            }
         }
     },
     "components": {
@@ -523,6 +560,37 @@
                             }
                         }
                     }
+                ]
+            },
+            "Status": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": [0, 700]
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": [
+                            "OK",
+                            "Database connection failed"
+                        ]
+                    },
+                    "data_updated": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "software_version": {
+                        "$ref": "https://jenkin.dev/json-schema-bricks/semver.schema.min.json"
+                    },
+                    "database_version": {
+                        "$ref": "https://jenkin.dev/json-schema-bricks/semver.schema.min.json"
+                    }
+                },
+                "required": [
+                    "status",
+                    "message"
                 ]
             }
         }
