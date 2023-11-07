@@ -61,7 +61,9 @@ When ready, the following table will be updated.
 | | `/lookup` endpoint | | | | ■ | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
 | | `/reverse` endpoint | | | | ■ | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
 | | `/status` endpoint | | | | ■ | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
-| | `/details` endpoint | ■ | | | | |
+| | `/details` endpoint | | | | ■ | [#13](https://github.com/sparkfabrik/nominatim-openapi/issues/13) |
+| | `/deletable` endpoint | | | | ■ | [#13](https://github.com/sparkfabrik/nominatim-openapi/issues/13) |
+| | `/polygons` endpoint | | | | ■ | [#13](https://github.com/sparkfabrik/nominatim-openapi/issues/13) |
 | Test suite | | ■ | | | | |
 | Node CLI | | ■ | | | | |
 
