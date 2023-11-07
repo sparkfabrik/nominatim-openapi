@@ -158,7 +158,8 @@
                     },
                     {
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "pattern": "^[a-zA-Z]{2}$"
                         },
                         "in": "query",
                         "name": "countrycodes",
@@ -694,6 +695,175 @@
                     "Status"
                 ]
             }
+        },
+        "/details": {
+            "get": {
+                "summary": "Show all details about a single place saved in the database",
+                "operationId": "details",
+                "description": "This API endpoint is meant for visual inspection of the data in the database, mainly together with Nominatim-UI. The parameters of the endpoint and the output may change occasionally between versions of Nominatim. Do not rely on the output in scripts or applications.",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "N",
+                                "W",
+                                "R"
+                            ]
+                        },
+                        "in": "query",
+                        "required": true,
+                        "name": "osmtype",
+                        "description": "The type is one of node (N), way (W) or relation (R)."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "in": "query",
+                        "required": true,
+                        "name": "osmid",
+                        "description": "The id must be a number."
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "class",
+                        "description": "The class parameter is optional and allows to distinguish between entries, when the corresponding OSM object has more than one main tag. For example, when a place is tagged with tourism=hotel and amenity=restaurant, there will be two place entries in Nominatim, one for a restaurant, one for a hotel. You need to specify class=tourism or class=amentity to get exactly the one you want. If there are multiple places in the database but the class parameter is left out, then one of the places will be chosen at random and displayed."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "in": "query",
+                        "name": "place_id",
+                        "description": "Place IDs are assigned sequentially during Nominatim data import. The ID for a place is different between Nominatim installation (servers) and changes when data gets reimported. Therefore it cannot be used as a permanent id and shouldn't be used in bug reports."
+                    },
+                    {
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "json"
+                            ],
+                            "default": "json"
+                        },
+                        "in": "query",
+                        "name": "format",
+                        "description": "Format of response. See [Place Output Formats](https://nominatim.org/release-docs/develop/api/Output/) for details on each format. If not specified, it is equal to `json`."
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "json_callback",
+                        "description": "Wrap JSON output in a callback function (JSONP) i.e. <string>(<json>). Only has an effect for JSON output formats."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "in": "query",
+                        "name": "addressdetails",
+                        "description": "Include a breakdown of the address into elements."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "in": "query",
+                        "name": "keywords",
+                        "description": "Include a list of name keywords and address keywords in the result."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "in": "query",
+                        "name": "linkedplaces",
+                        "description": "Include details of places that are linked with this one. Places get linked together when they are different forms of the same physical object. Nominatim links two kinds of objects together: place nodes get linked with the corresponding administrative boundaries. Waterway relations get linked together with their members."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "in": "query",
+                        "name": "hierarchy",
+                        "description": "Include details of places lower in the address hierarchy."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "in": "query",
+                        "name": "group_hierarchy",
+                        "description": "The output of the address hierarchy will be grouped by type."
+                    },
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "in": "query",
+                        "name": "polygon_geojson",
+                        "description": "Include geometry of result as a GeoJSON."
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "accept-language",
+                        "description": "Preferred language order for showing search results, overrides the value specified in the [Accept-Language HTTP header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language). Either use a standard RFC2616 accept-language string or a simple comma-separated list of language codes."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Details"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Debug"
+                ]
+            }
         }
     },
     "components": {
@@ -760,7 +930,10 @@
                     "status": {
                         "type": "integer",
                         "minimum": 0,
-                        "example": [0, 700]
+                        "example": [
+                            0,
+                            700
+                        ]
                     },
                     "message": {
                         "type": "string",
@@ -784,6 +957,152 @@
                     "status",
                     "message"
                 ]
+            },
+            "Details": {
+                "type": "object",
+                "properties": {
+                    "place_id": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "parent_place_id": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "osm_type": {
+                        "type": "string",
+                        "examples": [
+                            "N",
+                            "W",
+                            "R"
+                        ]
+                    },
+                    "osm_id": {
+                        "type": "integer"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "admin_level": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "localname": {
+                        "type": "string"
+                    },
+                    "names": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "addresstags": {
+                        "type": "object"
+                    },
+                    "calculated_postcode": {
+                        "type": "string"
+                    },
+                    "country_code": {
+                        "type": "string",
+                        "pattern": "^[a-zA-Z]{2}$"
+                    },
+                    "indexed_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "importance": {
+                        "type": "number",
+                        "minimum": 0
+                    },
+                    "calculated_importance": {
+                        "type": "number",
+                        "minimum": 0
+                    },
+                    "extratags": {
+                        "type": "object"
+                    },
+                    "rank_address": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "rank_search": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "isarea": {
+                        "type": "boolean"
+                    },
+                    "centroid": {
+                        "$ref": "https://geojson.org/schema/Point.json"
+                    },
+                    "geometry": {
+                        "$ref": "https://geojson.org/schema/GeoJSON.json"
+                    },
+                    "address": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "localname": {
+                                    "type": "string"
+                                },
+                                "place_id": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "osm_id": {
+                                    "type": "integer"
+                                },
+                                "osm_type": {
+                                    "type": "string",
+                                    "examples": [
+                                        "N",
+                                        "W",
+                                        "R"
+                                    ]
+                                },
+                                "class": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "admin_level": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "rank_address": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                },
+                                "distance": {
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "isaddress": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
             }
         }
     }
