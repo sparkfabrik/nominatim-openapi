@@ -59,8 +59,8 @@ When ready, the following table will be updated.
 | --------- | ---- | --- | ----- | ----- | ---- | ---- |
 | OpenAPI Spec | `/search` endpoint | | | | ■ | [#2](https://github.com/sparkfabrik/nominatim-openapi/issues/2) |
 | | `/lookup` endpoint | | | | ■ | [#4](https://github.com/sparkfabrik/nominatim-openapi/issues/4) |
-| | `/reverse` endpoint | | ■ | | | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
-| | `/status` endpoint | | | ■ | | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
+| | `/reverse` endpoint | | | | ■ | [#3](https://github.com/sparkfabrik/nominatim-openapi/issues/3) |
+| | `/status` endpoint | | | | ■ | [#5](https://github.com/sparkfabrik/nominatim-openapi/issues/5) |
 | | `/details` endpoint | ■ | | | | |
 | Test suite | | ■ | | | | |
 | Node CLI | | ■ | | | | |
