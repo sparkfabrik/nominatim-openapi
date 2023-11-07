@@ -864,6 +864,29 @@
                     "Debug"
                 ]
             }
+        },
+        "/deletable": {
+            "get": {
+                "summary": "List objects that have been deleted in OSM but are held back in Nominatim in case the deletion was accidental",
+                "operationId": "status",
+                "description": "Redirect to https://nominatim.openstreetmap.org/ui/deletable.html",
+                "responses": {
+                    "302": {
+                        "description": "Redirect to https://nominatim.openstreetmap.org/ui/deletable.html",
+                        "headers": {
+                            "location": {
+                                "schema": {
+                                    "type": "string",
+                                    "const": "https://nominatim.openstreetmap.org/ui/deletable.html"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Debug"
+                ]
+            }
         }
     },
     "components": {
