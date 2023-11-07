@@ -685,7 +685,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Status"
+                                    "$ref": "#/components/schemas/StatusResponse"
                                 }
                             }
                         }
@@ -712,7 +712,6 @@
                             ]
                         },
                         "in": "query",
-                        "required": true,
                         "name": "osmtype",
                         "description": "The type is one of node (N), way (W) or relation (R)."
                     },
@@ -722,7 +721,6 @@
                             "minimum": 0
                         },
                         "in": "query",
-                        "required": true,
                         "name": "osmid",
                         "description": "The id must be a number."
                     },
@@ -844,7 +842,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Details"
+                                    "$ref": "#/components/schemas/DetailsResponse"
                                 }
                             }
                         }
@@ -854,7 +852,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Error"
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         }
@@ -970,7 +968,7 @@
                     }
                 ]
             },
-            "Status": {
+            "StatusResponse": {
                 "type": "object",
                 "properties": {
                     "status": {
@@ -1004,7 +1002,7 @@
                     "message"
                 ]
             },
-            "Details": {
+            "DetailsResponse": {
                 "type": "object",
                 "properties": {
                     "place_id": {
@@ -1138,7 +1136,7 @@
                     }
                 }
             },
-            "Error": {
+            "ErrorResponse": {
                 "type": "object",
                 "properties": {
                     "code": {
