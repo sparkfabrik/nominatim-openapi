@@ -56,5 +56,5 @@ echo "Checksum ($OUTPUT_DIR/$OAS_FILE.checksum): $SHA_PREFIX-$SHA_OAS_CHECKSUM"
 echo -n "$SHA_PREFIX-$SHA_OAS_CHECKSUM" > $OUTPUT_DIR/$OAS_FILE.checksum
 
 # Stage new checksums
-git add $OUTPUT_DIR/$OAS_FILE.checksum
+git add $OUTPUT_DIR/$OAS_FILE $OUTPUT_DIR/$OAS_FILE.checksum
 exit 0

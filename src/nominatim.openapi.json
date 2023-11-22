@@ -3,7 +3,7 @@
     "info": {
         "title": "OpenStreetMap Nominatim API",
         "version": "4.3.2",
-        "description": "OpenStreetMap Nominatim API\n\nNeed some help?\n[nominatim.org](https://nominatim.org/)",
+        "description": "Nominatim (from the Latin, 'by name') is a tool to search OSM data by name and address and to generate synthetic addresses of OSM points (reverse geocoding). It has also limited capability to search features by their type (pubs, hotels, churches, etc).\n\nNeed some help?\n[nominatim.org](https://nominatim.org/)",
         "termsOfService": "https://operations.osmfoundation.org/policies/nominatim/",
         "contact": {
             "url": "https://github.com/osm-search/Nominatim/issues"
