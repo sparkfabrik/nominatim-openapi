@@ -50,6 +50,10 @@ You can run `make checksum` and `make verify` to compute and verify the checksum
 
 Refs: #6.
 
+### Versioning
+
+This spec follows the Nominatim API versioning, so it use the [same tags](https://github.com/osm-search/Nominatim/tags) of the original project.
+
 ## Roadmap
 
 A this early stage, we are discussing the roadmap in a [dedicated issue](https://github.com/sparkfabrik/nominatim-openapi/issues/1).
